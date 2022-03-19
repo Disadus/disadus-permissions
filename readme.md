@@ -119,7 +119,7 @@ The `query` argument is the query string you will be using to search though the 
 
 The `caseSensitive` argument indicates whether the query is case sensitive (Default `true`).
 
-### `async userHasPermissions = (user: string, queries: string[], caseSensitive = true): Promise<boolean>`
+#### `async userHasPermissions = (user: string, queries: string[], caseSensitive = true): Promise<boolean>`
 
 This will check if a user has all of the permissions requested given the query strings passed in (See [How Permissions Work](#how-permissions-work)).
 
