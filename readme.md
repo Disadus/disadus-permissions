@@ -6,7 +6,7 @@ Easy to use permissions library which allows you to store and match permissions!
 
 Permissions work in a way that you can do `this.is.a.permission` and it will get
 parsed into `['this', 'is', 'a', 'permission']`. That way, it can be matched with
-the exact same list, or one could also use a `*`.
+the same list, or one could also use a `*`.
 
 The `\*` causes that query or permission to match all of its children, so a query of
 `this.is.a.\*` would not only match `this.is.a.permission` but also `this.is.a.test`, and a
@@ -27,7 +27,7 @@ the actual permission `this.is.a.permission`
 
 ### Setup
 
-To setup `disadus-permissions` you can create a `PermissionsManager` by passing in a `mongodb.MongoClient`
+To set up `disadus-permissions` you can create a `PermissionsManager` by passing in a `mongodb.MongoClient`
 
 ```ts
 import { MongoClient } from 'mongodb';
@@ -43,11 +43,11 @@ const Manager = new PermissionsManager(
 );
 ```
 
-And simple as that, it will create and set up the permission database if it has not been setup before!
+And simple as that, it will create and set up the permission database if it has not been set up before!
 
 ### Using `PermissionsMaganer`
 
-The `PermissionsManager`'s main pupase it to allow you to manipulate the permissions of users, as per its name.
+The `PermissionsManager`'s main purpose is to allow you to manipulate the permissions of users, as per its name.
 Here are the functions it has to help you do that:
 
 #### `async addUserPermission(user: string, permission: string)`
@@ -64,7 +64,7 @@ await Manager.addUserPermission("K8OJF", "this.is.a.permission")
 
 #### `async addUserPermissions(user: string, permissions: string[])`
 
-Very similar to `adduserPermission` but instead will add multiple permissions at the same time, this will also create a user if it does not exist. This will remove duplicate permissions.
+Very similar to `addUserPermission` but instead will add multiple permissions at the same time, this will also create a user if it does not exist. This will remove duplicate permissions.
 
 The `user` argument is the id of the user you are attempting to modify.
 
@@ -88,7 +88,7 @@ Note: This currently does not allow selecting permissions based on a permission 
 await Manager.removeUserPermission("K8OJF", "this.is.a.permission")
 ```
 
-#### `async removeUserPermission(user: string, permission: string)`
+#### `async removeUserPermissions(user: string, permission: string[])`
 
 This will remove all instances of a specific set of permissions from a user, this will not create a user and it will not remove duplicate permissions.
 
@@ -99,12 +99,12 @@ The `permissions` argument is the permissions you want to remove from the user.
 Note: This currently does not allow selecting permissions based on a permission query.
 
 ```ts
-await Manager.removeUserPermission("K8OJF", ["this.is.a.permission", "this.is.a.test"])
+await Manager.removeUserPermissions("K8OJF", ["this.is.a.permission", "this.is.a.test"])
 ```
 
 #### `async getUserPermissionsList(user: string): Promise<string[] | null>`
 
-This will get all of the permissions accociated with a user, if the user does not exist it will instead return `null`
+This will get all of the permissions associated with a user, if the user does not exist it will instead return `null`
 
 The `user` argument is the id of the user you are attempting to find.
 
@@ -114,11 +114,11 @@ await Manager.getUserPermissionsList("K8OJF")
 
 #### `async setUserPermissions(user: string, permissions: string[])`
 
-This will set a users permissions to a specific array, this will create a new user if they do not exist and will remove duplicates.
+This will set a user's permissions to a specific array, this will create a new user if they do not exist and will remove duplicates.
 
 The `user` argument is the id of the user you are attempting to modify.
 
-The `permissions` argument is the permissions you want give the user.
+The `permissions` argument is the permissions you want to give the user.
 
 ```ts
 await Manager.setUserPermissions("K8OJF", ["this.is.a.permission", "this.is.another.permission", "this.is.a.test"])
@@ -140,7 +140,7 @@ This will check if a user has a certain permission given a certain query string 
 
 The `user` argument is the id of the user you are attempting to query.
 
-The `query` argument is the query string you will be using to search though the permissions.
+The `query` argument is the query string you will be using to search through the permissions.
 
 The `caseSensitive` argument indicates whether the query is case sensitive (Default `true`).
 
@@ -155,9 +155,9 @@ This will check if a user has all of the permissions requested given the query s
 
 The `user` argument is the id of the user you are attempting to query.
 
-The `queries` argument is the list of query strings you will be using to search though the permissions.
+The `queries` argument is the list of query strings you will be using to search through the permissions.
 
-The `caseSensitive` argument indicates whether the queries is case sensitive (Default `true`).
+The `caseSensitive` argument indicates whether the query is case sensitive (Default `true`).
 
 ```ts
 await Manager.userHasPermissions("K8OJF", ["this.is.a.permission", "this.is.another.*"])
