@@ -1,9 +1,12 @@
 {
-  "name": "@Disadus/disadus-permissions",
+  "name": "@disadus/disadus-permissions",
   "version": "1.0.0",
   "description": "API for plugins to deal with permissions!",
   "main": "dist/index.js",
-  "author": "Ashvin Ranjan (Asra) <me@ash.vin>",
+  "author": {
+    "name": "Ashvin Ranjan",
+    "email": "me@ash.vin"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.18",
@@ -15,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Disadus/disadus-plugin-api.git"
+    "url": "git+https://github.com/Disadus/disadus-permissions.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/",
