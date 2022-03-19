@@ -1,6 +1,11 @@
 import { Db, MongoClient } from 'mongodb';
 import { matchesPermissions } from './permissionMatcher';
 
+export interface User {
+  id: string,
+  permissions: [],
+}
+
 export class PermissionsManager {
   client: MongoClient;
   databaseName: string;
@@ -40,7 +45,7 @@ export class PermissionsManager {
           id: user,
         },
         {
-          permissions: userData.permissions.concat(permission),
+          permissions: [...Array.from(new Set(userData.permissions.concat(permission)))],
         }
       );
     }
@@ -54,7 +59,7 @@ export class PermissionsManager {
     if (!userData) {
       await this.db.collection(this.collectionName).insertOne({
         id: user,
-        permissions: permissions,
+        permissions: [...Array.from(new Set(permissions))],
       });
     } else {
       await this.db.collection(this.collectionName).updateOne(
@@ -62,7 +67,7 @@ export class PermissionsManager {
           id: user,
         },
         {
-          permissions: userData.permissions.concat(permissions),
+          permissions: [...Array.from(new Set(userData.permissions.concat(permissions)))],
         }
       );
     }
@@ -124,14 +129,14 @@ export class PermissionsManager {
         id: user,
       },
       {
-        permissions: permissions,
+        permissions: [...Array.from(new Set(permissions))],
       }
     );
 
     if (userData.modifiedCount == 0) {
       await this.db.collection(this.collectionName).insertOne({
         id: user,
-        permissions: permissions,
+        permissions: [...Array.from(new Set(permissions))],
       });
     }
   };
