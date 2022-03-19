@@ -35,6 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionsManager = void 0;
 var permissionMatcher_1 = require("./permissionMatcher");
@@ -63,7 +72,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 3: return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
                             id: user,
                         }, {
-                            permissions: userData.permissions.concat(permission),
+                            permissions: __spreadArray([], Array.from(new Set(userData.permissions.concat(permission))), true),
                         })];
                     case 4:
                         _a.sent();
@@ -84,7 +93,7 @@ var PermissionsManager = /** @class */ (function () {
                         if (!!userData) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.db.collection(this.collectionName).insertOne({
                                 id: user,
-                                permissions: permissions,
+                                permissions: __spreadArray([], Array.from(new Set(permissions)), true),
                             })];
                     case 2:
                         _a.sent();
@@ -92,7 +101,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 3: return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
                             id: user,
                         }, {
-                            permissions: userData.permissions.concat(permissions),
+                            permissions: __spreadArray([], Array.from(new Set(userData.permissions.concat(permissions))), true),
                         })];
                     case 4:
                         _a.sent();
@@ -168,14 +177,14 @@ var PermissionsManager = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
                             id: user,
                         }, {
-                            permissions: permissions,
+                            permissions: __spreadArray([], Array.from(new Set(permissions)), true),
                         })];
                     case 1:
                         userData = _a.sent();
                         if (!(userData.modifiedCount == 0)) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.db.collection(this.collectionName).insertOne({
                                 id: user,
-                                permissions: permissions,
+                                permissions: __spreadArray([], Array.from(new Set(permissions)), true),
                             })];
                     case 2:
                         _a.sent();
