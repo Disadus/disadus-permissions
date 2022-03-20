@@ -39,7 +39,7 @@ const client: mongoDB.MongoClient = new mongoDB.MongoClient(
 const Manager = new PermissionsManager(
   client
   // You can also pass in a databaseName argument for a specific name for the database, default "_DisadusPermissions"
-  // You can also pass in a collectionName argument for a specific name for the collection, default "Permissions"
+  // You can also pass in a globalCollectionName argument for a specific name for the collection, default "GlobalPermissions"
 );
 ```
 
@@ -49,6 +49,9 @@ And simple as that, it will create and set up the permission database if it has 
 
 The `PermissionsManager`'s main purpose is to allow you to manipulate the permissions of users, as per its name.
 Here are the functions it has to help you do that:
+
+Note: All of these functions also have an optional `scopeName` argument to create permissions in different scopes
+for indexing times and organization.
 
 #### `async addUserPermission(user: string, permission: string)`
 
