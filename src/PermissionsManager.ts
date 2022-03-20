@@ -28,7 +28,8 @@ export class PermissionsManager {
   }
 
   _authenticateScope = async (scopeName: string) => {
-    await this.db.createCollection(scopeName);
+    if ((await this.db.listCollections({ name: scopeName }).toArray()).length == 0)
+      await this.db.createCollection(scopeName);
     if (!this.db.collection(scopeName).indexExists('id')) {
       this.db
         .collection(scopeName)
