@@ -1,5 +1,5 @@
 {
-  "name": "@disadus/disadus-permissions",
+  "name": "disadus-permissions",
   "version": "1.1.0",
   "description": "API for plugins to deal with permissions!",
   "main": "dist/index.js",
@@ -19,10 +19,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Disadus/disadus-permissions.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "access": "public"
   },
   "dependencies": {
     "mongodb": "^4.4.1"
