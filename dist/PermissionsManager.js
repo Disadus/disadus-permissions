@@ -50,26 +50,37 @@ var permissionMatcher_1 = require("./permissionMatcher");
 var PermissionsManager = /** @class */ (function () {
     function PermissionsManager(c, dn, cn) {
         if (dn === void 0) { dn = '_DisadusPermissions'; }
-        if (cn === void 0) { cn = 'Permissions'; }
+        if (cn === void 0) { cn = 'GlobalPermissions'; }
         var _this = this;
-        this.addUserPermission = function (user, permission) { return __awaiter(_this, void 0, void 0, function () {
-            var userData;
+        this._authenticateScope = function (scopeName) {
+            if (!_this.db.collection(scopeName).indexExists('id')) {
+                _this.db
+                    .collection(scopeName)
+                    .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
+            }
+        };
+        this.addUserPermission = function (user, permission, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db
-                            .collection(this.collectionName)
-                            .findOne({ id: user })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db
+                                .collection(collection)
+                                .findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!!userData) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.db.collection(this.collectionName).insertOne({
+                        return [4 /*yield*/, this.db.collection(collection).insertOne({
                                 id: user,
                                 permissions: [permission],
                             })];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
+                    case 3: return [4 /*yield*/, this.db.collection(collection).updateOne({
                             id: user,
                         }, {
                             permissions: __spreadArray([], Array.from(new Set(userData.permissions.concat(permission))), true),
@@ -81,24 +92,28 @@ var PermissionsManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.addUserPermissions = function (user, permissions) { return __awaiter(_this, void 0, void 0, function () {
-            var userData;
+        this.addUserPermissions = function (user, permissions, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db
-                            .collection(this.collectionName)
-                            .findOne({ id: user })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db
+                                .collection(collection)
+                                .findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!!userData) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.db.collection(this.collectionName).insertOne({
+                        return [4 /*yield*/, this.db.collection(collection).insertOne({
                                 id: user,
                                 permissions: __spreadArray([], Array.from(new Set(permissions)), true),
                             })];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
+                    case 3: return [4 /*yield*/, this.db.collection(collection).updateOne({
                             id: user,
                         }, {
                             permissions: __spreadArray([], Array.from(new Set(userData.permissions.concat(permissions))), true),
@@ -110,17 +125,21 @@ var PermissionsManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.removeUserPermission = function (user, permission) { return __awaiter(_this, void 0, void 0, function () {
-            var userData;
+        this.removeUserPermission = function (user, permission, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db
-                            .collection(this.collectionName)
-                            .findOne({ id: user })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db
+                                .collection(collection)
+                                .findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!userData) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
+                        return [4 /*yield*/, this.db.collection(collection).updateOne({
                                 id: user,
                             }, {
                                 permissions: userData.permissions.filter(function (v) { return v != permission; }),
@@ -132,17 +151,21 @@ var PermissionsManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.removeUserPermissions = function (user, permissions) { return __awaiter(_this, void 0, void 0, function () {
-            var userData;
+        this.removeUserPermissions = function (user, permissions, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db
-                            .collection(this.collectionName)
-                            .findOne({ id: user })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db
+                                .collection(collection)
+                                .findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!userData) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
+                        return [4 /*yield*/, this.db.collection(collection).updateOne({
                                 id: user,
                             }, {
                                 permissions: userData.permissions.filter(function (v) { return permissions.indexOf(v) != -1; }),
@@ -154,13 +177,17 @@ var PermissionsManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getUserPermissionsList = function (user) { return __awaiter(_this, void 0, void 0, function () {
-            var userData;
+        this.getUserPermissionsList = function (user, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db
-                            .collection(this.collectionName)
-                            .findOne({ id: user })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db
+                                .collection(collection)
+                                .findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!userData) {
@@ -170,19 +197,23 @@ var PermissionsManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.setUserPermissions = function (user, permissions) { return __awaiter(_this, void 0, void 0, function () {
-            var userData;
+        this.setUserPermissions = function (user, permissions, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db.collection(this.collectionName).updateOne({
-                            id: user,
-                        }, {
-                            permissions: __spreadArray([], Array.from(new Set(permissions)), true),
-                        })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db.collection(collection).updateOne({
+                                id: user,
+                            }, {
+                                permissions: __spreadArray([], Array.from(new Set(permissions)), true),
+                            })];
                     case 1:
                         userData = _a.sent();
                         if (!(userData.modifiedCount == 0)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.db.collection(this.collectionName).insertOne({
+                        return [4 /*yield*/, this.db.collection(collection).insertOne({
                                 id: user,
                                 permissions: __spreadArray([], Array.from(new Set(permissions)), true),
                             })];
@@ -193,25 +224,34 @@ var PermissionsManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.removeUser = function (user) { return __awaiter(_this, void 0, void 0, function () {
+        this.removeUser = function (user, scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            var collection;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db.collection(this.collectionName).deleteOne({ id: user })];
+                    case 0:
+                        if (scopeName)
+                            this._authenticateScope(scopeName);
+                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        return [4 /*yield*/, this.db.collection(collection).deleteOne({ id: user })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
                 }
             });
         }); };
-        this.userHasPermission = function (user, query, caseSensitive) {
+        this.userHasPermission = function (user, query, caseSensitive, scopeName) {
             if (caseSensitive === void 0) { caseSensitive = true; }
             return __awaiter(_this, void 0, void 0, function () {
-                var userData;
+                var collection, userData;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, this.db
-                                .collection(this.collectionName)
-                                .findOne({ id: user })];
+                        case 0:
+                            if (scopeName)
+                                this._authenticateScope(scopeName);
+                            collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                            return [4 /*yield*/, this.db
+                                    .collection(collection)
+                                    .findOne({ id: user })];
                         case 1:
                             userData = _a.sent();
                             if (!userData) {
@@ -222,15 +262,19 @@ var PermissionsManager = /** @class */ (function () {
                 });
             });
         };
-        this.userHasPermissions = function (user, queries, caseSensitive) {
+        this.userHasPermissions = function (user, queries, caseSensitive, scopeName) {
             if (caseSensitive === void 0) { caseSensitive = true; }
             return __awaiter(_this, void 0, void 0, function () {
-                var userData, _i, queries_1, query;
+                var collection, userData, _i, queries_1, query;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, this.db
-                                .collection(this.collectionName)
-                                .findOne({ id: user })];
+                        case 0:
+                            if (scopeName)
+                                this._authenticateScope(scopeName);
+                            collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                            return [4 /*yield*/, this.db
+                                    .collection(collection)
+                                    .findOne({ id: user })];
                         case 1:
                             userData = _a.sent();
                             if (!userData) {
@@ -250,14 +294,14 @@ var PermissionsManager = /** @class */ (function () {
         };
         this.client = c;
         this.databaseName = dn;
-        this.collectionName = cn;
+        this.globalCollectionName = cn;
         // Setup
         //
         // For some reason I cannot store the reference to the collection
         this.db = this.client.db(this.databaseName);
-        if (!this.db.collection(this.collectionName).indexExists('id')) {
+        if (!this.db.collection(this.globalCollectionName).indexExists('id')) {
             this.db
-                .collection(this.collectionName)
+                .collection(this.globalCollectionName)
                 .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
         }
     }
