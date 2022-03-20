@@ -53,3 +53,4 @@ var matchesPermissions = function (query, permissions, caseSensitive) {
     return false;
 };
 exports.matchesPermissions = matchesPermissions;
+//# sourceMappingURL=permissionMatcher.js.map

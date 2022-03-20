@@ -265,3 +265,4 @@ var PermissionsManager = /** @class */ (function () {
 }());
 exports.PermissionsManager = PermissionsManager;
 exports.default = PermissionsManager;
+//# sourceMappingURL=PermissionsManager.js.map
