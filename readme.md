@@ -27,7 +27,7 @@ the actual permission `this.is.a.permission`
 
 ### Setup
 
-To set up `disadus-permissions` you can create a `PermissionsManager` by passing in a `mongodb.MongoClient`
+To set up `disadus-permissions` you can create a `PermissionsManager` by passing in a `mongodb.MongoClient`, then call `setup()`
 
 ```ts
 import { MongoClient } from 'mongodb';
@@ -41,6 +41,7 @@ const Manager = new PermissionsManager(
   // You can also pass in a databaseName argument for a specific name for the database, default "_DisadusPermissions"
   // You can also pass in a globalCollectionName argument for a specific name for the collection, default "GlobalPermissions"
 );
+await Manager.setup();
 ```
 
 And simple as that, it will create and set up the permission database if it has not been set up before!
@@ -52,6 +53,11 @@ Here are the functions it has to help you do that:
 
 Note: All of these functions also have an optional `scopeName` argument to create permissions in different scopes
 for indexing times and organization.
+
+
+#### `async setup()`
+
+Sets up the global permissions scope.
 
 #### `async addUserPermission(user: string, permission: string)`
 

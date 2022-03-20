@@ -20,22 +20,15 @@ export class PermissionsManager {
     this.client = c;
     this.databaseName = dn;
     this.globalCollectionName = cn;
-
-    // Setup
-    //
-    // For some reason I cannot store the reference to the collection
     this.db = this.client.db(this.databaseName);
-
-    this.db.collection(this.globalCollectionName);
-
-    if (!this.db.collection(this.globalCollectionName).indexExists('id')) {
-      this.db
-        .collection(this.globalCollectionName)
-        .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
-    }
   }
 
-  _authenticateScope = (scopeName: string) => {
+  setup = async () => {
+    await this._authenticateScope(this.globalCollectionName)
+  }
+
+  _authenticateScope = async (scopeName: string) => {
+    await this.db.createCollection(scopeName);
     if (!this.db.collection(scopeName).indexExists('id')) {
       this.db
         .collection(scopeName)
