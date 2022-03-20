@@ -52,13 +52,31 @@ var PermissionsManager = /** @class */ (function () {
         if (dn === void 0) { dn = '_DisadusPermissions'; }
         if (cn === void 0) { cn = 'GlobalPermissions'; }
         var _this = this;
-        this._authenticateScope = function (scopeName) {
-            if (!_this.db.collection(scopeName).indexExists('id')) {
-                _this.db
-                    .collection(scopeName)
-                    .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
-            }
-        };
+        this.setup = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._authenticateScope(this.globalCollectionName)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); };
+        this._authenticateScope = function (scopeName) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.db.createCollection(scopeName)];
+                    case 1:
+                        _a.sent();
+                        if (!this.db.collection(scopeName).indexExists('id')) {
+                            this.db
+                                .collection(scopeName)
+                                .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        }); };
         this.addUserPermission = function (user, permission, scopeName) { return __awaiter(_this, void 0, void 0, function () {
             var collection, userData;
             return __generator(this, function (_a) {
@@ -67,9 +85,7 @@ var PermissionsManager = /** @class */ (function () {
                         if (scopeName)
                             this._authenticateScope(scopeName);
                         collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                        return [4 /*yield*/, this.db
-                                .collection(collection)
-                                .findOne({ id: user })];
+                        return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!!userData) return [3 /*break*/, 3];
@@ -100,9 +116,7 @@ var PermissionsManager = /** @class */ (function () {
                         if (scopeName)
                             this._authenticateScope(scopeName);
                         collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                        return [4 /*yield*/, this.db
-                                .collection(collection)
-                                .findOne({ id: user })];
+                        return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!!userData) return [3 /*break*/, 3];
@@ -133,9 +147,7 @@ var PermissionsManager = /** @class */ (function () {
                         if (scopeName)
                             this._authenticateScope(scopeName);
                         collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                        return [4 /*yield*/, this.db
-                                .collection(collection)
-                                .findOne({ id: user })];
+                        return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!userData) return [3 /*break*/, 3];
@@ -159,9 +171,7 @@ var PermissionsManager = /** @class */ (function () {
                         if (scopeName)
                             this._authenticateScope(scopeName);
                         collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                        return [4 /*yield*/, this.db
-                                .collection(collection)
-                                .findOne({ id: user })];
+                        return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!userData) return [3 /*break*/, 3];
@@ -185,9 +195,7 @@ var PermissionsManager = /** @class */ (function () {
                         if (scopeName)
                             this._authenticateScope(scopeName);
                         collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                        return [4 /*yield*/, this.db
-                                .collection(collection)
-                                .findOne({ id: user })];
+                        return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
                         if (!userData) {
@@ -249,9 +257,7 @@ var PermissionsManager = /** @class */ (function () {
                             if (scopeName)
                                 this._authenticateScope(scopeName);
                             collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                            return [4 /*yield*/, this.db
-                                    .collection(collection)
-                                    .findOne({ id: user })];
+                            return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                         case 1:
                             userData = _a.sent();
                             if (!userData) {
@@ -272,9 +278,7 @@ var PermissionsManager = /** @class */ (function () {
                             if (scopeName)
                                 this._authenticateScope(scopeName);
                             collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
-                            return [4 /*yield*/, this.db
-                                    .collection(collection)
-                                    .findOne({ id: user })];
+                            return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                         case 1:
                             userData = _a.sent();
                             if (!userData) {
@@ -295,15 +299,7 @@ var PermissionsManager = /** @class */ (function () {
         this.client = c;
         this.databaseName = dn;
         this.globalCollectionName = cn;
-        // Setup
-        //
-        // For some reason I cannot store the reference to the collection
         this.db = this.client.db(this.databaseName);
-        if (!this.db.collection(this.globalCollectionName).indexExists('id')) {
-            this.db
-                .collection(this.globalCollectionName)
-                .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
-        }
     }
     return PermissionsManager;
 }());

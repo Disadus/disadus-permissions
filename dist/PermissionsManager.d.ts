@@ -9,7 +9,8 @@ export declare class PermissionsManager {
     globalCollectionName: string;
     db: Db;
     constructor(c: MongoClient, dn?: string, cn?: string);
-    _authenticateScope: (scopeName: string) => void;
+    setup: () => Promise<void>;
+    _authenticateScope: (scopeName: string) => Promise<void>;
     addUserPermission: (user: string, permission: string, scopeName?: string | undefined) => Promise<void>;
     addUserPermissions: (user: string, permissions: string[], scopeName?: string | undefined) => Promise<void>;
     removeUserPermission: (user: string, permission: string, scopeName?: string | undefined) => Promise<void>;
