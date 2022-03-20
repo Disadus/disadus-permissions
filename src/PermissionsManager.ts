@@ -2,8 +2,8 @@ import { Db, MongoClient } from 'mongodb';
 import { matchesPermissions } from './permissionMatcher';
 
 export interface User {
-  id: string,
-  permissions: [],
+  id: string;
+  permissions: [];
 }
 
 export class PermissionsManager {
@@ -12,7 +12,11 @@ export class PermissionsManager {
   globalCollectionName: string;
   db: Db;
 
-  constructor(c: MongoClient, dn = '_DisadusPermissions', cn = 'GlobalPermissions') {
+  constructor(
+    c: MongoClient,
+    dn = '_DisadusPermissions',
+    cn = 'GlobalPermissions'
+  ) {
     this.client = c;
     this.databaseName = dn;
     this.globalCollectionName = cn;
@@ -21,6 +25,8 @@ export class PermissionsManager {
     //
     // For some reason I cannot store the reference to the collection
     this.db = this.client.db(this.databaseName);
+
+    this.db.collection(this.globalCollectionName);
 
     if (!this.db.collection(this.globalCollectionName).indexExists('id')) {
       this.db
@@ -35,17 +41,18 @@ export class PermissionsManager {
         .collection(scopeName)
         .createIndexes([{ key: { id: 'hashed' }, name: 'id' }]);
     }
-  }
+  };
 
-  addUserPermission = async (user: string, permission: string, scopeName?: string) => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+  addUserPermission = async (
+    user: string,
+    permission: string,
+    scopeName?: string
+  ) => {
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (!userData) {
       await this.db.collection(collection).insertOne({
@@ -58,21 +65,24 @@ export class PermissionsManager {
           id: user,
         },
         {
-          permissions: [...Array.from(new Set(userData.permissions.concat(permission)))],
+          permissions: [
+            ...Array.from(new Set(userData.permissions.concat(permission))),
+          ],
         }
       );
     }
   };
 
-  addUserPermissions = async (user: string, permissions: string[], scopeName?: string) => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+  addUserPermissions = async (
+    user: string,
+    permissions: string[],
+    scopeName?: string
+  ) => {
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (!userData) {
       await this.db.collection(collection).insertOne({
@@ -85,21 +95,24 @@ export class PermissionsManager {
           id: user,
         },
         {
-          permissions: [...Array.from(new Set(userData.permissions.concat(permissions)))],
+          permissions: [
+            ...Array.from(new Set(userData.permissions.concat(permissions))),
+          ],
         }
       );
     }
   };
 
-  removeUserPermission = async (user: string, permission: string, scopeName?: string) => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+  removeUserPermission = async (
+    user: string,
+    permission: string,
+    scopeName?: string
+  ) => {
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (userData) {
       await this.db.collection(collection).updateOne(
@@ -115,15 +128,16 @@ export class PermissionsManager {
     }
   };
 
-  removeUserPermissions = async (user: string, permissions: string[], scopeName?: string) => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+  removeUserPermissions = async (
+    user: string,
+    permissions: string[],
+    scopeName?: string
+  ) => {
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (userData) {
       await this.db.collection(collection).updateOne(
@@ -139,15 +153,15 @@ export class PermissionsManager {
     }
   };
 
-  getUserPermissionsList = async (user: string, scopeName?: string): Promise<string[] | null> => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+  getUserPermissionsList = async (
+    user: string,
+    scopeName?: string
+  ): Promise<string[] | null> => {
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (!userData) {
       return null;
@@ -156,11 +170,14 @@ export class PermissionsManager {
     return userData.permissions;
   };
 
-  setUserPermissions = async (user: string, permissions: string[], scopeName?: string) => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+  setUserPermissions = async (
+    user: string,
+    permissions: string[],
+    scopeName?: string
+  ) => {
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
     const userData = await this.db.collection(collection).updateOne(
       {
@@ -180,10 +197,9 @@ export class PermissionsManager {
   };
 
   removeUser = async (user: string, scopeName?: string) => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
     await this.db.collection(collection).deleteOne({ id: user });
   };
@@ -194,14 +210,11 @@ export class PermissionsManager {
     caseSensitive = true,
     scopeName?: string
   ): Promise<boolean> => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (!userData) {
       return false;
@@ -216,14 +229,11 @@ export class PermissionsManager {
     caseSensitive = true,
     scopeName?: string
   ): Promise<boolean> => {
-    if (scopeName)
-      this._authenticateScope(scopeName)
+    if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName
+    const collection = scopeName ?? this.globalCollectionName;
 
-    const userData = await this.db
-      .collection(collection)
-      .findOne({ id: user });
+    const userData = await this.db.collection(collection).findOne({ id: user });
 
     if (!userData) {
       return false;
