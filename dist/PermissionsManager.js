@@ -65,9 +65,14 @@ var PermissionsManager = /** @class */ (function () {
         this._authenticateScope = function (scopeName) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db.createCollection(scopeName)];
+                    case 0: return [4 /*yield*/, this.db.listCollections({ name: scopeName }).toArray()];
                     case 1:
+                        if (!((_a.sent()).length == 0)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.db.createCollection(scopeName)];
+                    case 2:
                         _a.sent();
+                        _a.label = 3;
+                    case 3:
                         if (!this.db.collection(scopeName).indexExists('id')) {
                             this.db
                                 .collection(scopeName)
