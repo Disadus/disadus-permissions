@@ -89,7 +89,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
@@ -120,7 +120,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
@@ -151,7 +151,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
@@ -175,7 +175,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
@@ -199,7 +199,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                     case 1:
                         userData = _a.sent();
@@ -217,7 +217,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).updateOne({
                                 id: user,
                             }, {
@@ -244,7 +244,7 @@ var PermissionsManager = /** @class */ (function () {
                     case 0:
                         if (scopeName)
                             this._authenticateScope(scopeName);
-                        collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                        collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                         return [4 /*yield*/, this.db.collection(collection).deleteOne({ id: user })];
                     case 1:
                         _a.sent();
@@ -261,7 +261,7 @@ var PermissionsManager = /** @class */ (function () {
                         case 0:
                             if (scopeName)
                                 this._authenticateScope(scopeName);
-                            collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                            collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                             return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                         case 1:
                             userData = _a.sent();
@@ -282,7 +282,7 @@ var PermissionsManager = /** @class */ (function () {
                         case 0:
                             if (scopeName)
                                 this._authenticateScope(scopeName);
-                            collection = scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName;
+                            collection = (scopeName !== null && scopeName !== void 0 ? scopeName : this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
                             return [4 /*yield*/, this.db.collection(collection).findOne({ id: user })];
                         case 1:
                             userData = _a.sent();

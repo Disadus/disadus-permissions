@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.matchesPermissions = exports.matchesPermission = void 0;
 var matchesPermission = function (query, permission, caseSensitive) {
     if (caseSensitive === void 0) { caseSensitive = true; }
-    var queryPaths = caseSensitive ? query.split('.') : query.toLowerCase().split('.');
-    var permissionPaths = caseSensitive ? permission.split('.') : permission.toLowerCase().split('.');
+    var cleanedQuery = query.replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
+    var cleanedPermission = permission.replace(/^(\s|\.)+|(\s|\.)+$/gm, '');
+    var queryPaths = caseSensitive ? cleanedQuery.split('.') : cleanedQuery.toLowerCase().split('.');
+    var permissionPaths = caseSensitive ? cleanedPermission.split('.') : cleanedPermission.toLowerCase().split('.');
     // The shorter path will be queried because it will either not match or it will end in a *
     var shorterPath = queryPaths.length < permissionPaths.length ? queryPaths : permissionPaths;
     var longerPath = queryPaths.length >= permissionPaths.length ? queryPaths : permissionPaths;
@@ -37,6 +39,13 @@ var matchesPermission = function (query, permission, caseSensitive) {
             return false;
         }
         // Otherwise it matches and the search can continue
+    }
+    // If we reach this point that means that the shorter part has matched up with the longer part so far and there have been to *s, this means
+    // that if the lengths are equal they will match, but if they are not these do not match
+    // 
+    // Ex: `this.is.a` does not match `this.is.a.permission`
+    if (longerPath.length != shorterPath.length) {
+        return false;
     }
     // If the entire thing matches return true
     return true;

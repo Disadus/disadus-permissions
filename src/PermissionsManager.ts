@@ -44,7 +44,7 @@ export class PermissionsManager {
   ) => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 
@@ -74,7 +74,7 @@ export class PermissionsManager {
   ) => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 
@@ -104,7 +104,7 @@ export class PermissionsManager {
   ) => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 
@@ -129,7 +129,7 @@ export class PermissionsManager {
   ) => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 
@@ -153,7 +153,7 @@ export class PermissionsManager {
   ): Promise<string[] | null> => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 
@@ -171,7 +171,7 @@ export class PermissionsManager {
   ) => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).updateOne(
       {
@@ -193,7 +193,7 @@ export class PermissionsManager {
   removeUser = async (user: string, scopeName?: string) => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     await this.db.collection(collection).deleteOne({ id: user });
   };
@@ -206,7 +206,7 @@ export class PermissionsManager {
   ): Promise<boolean> => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 
@@ -225,7 +225,7 @@ export class PermissionsManager {
   ): Promise<boolean> => {
     if (scopeName) this._authenticateScope(scopeName);
 
-    const collection = scopeName ?? this.globalCollectionName;
+    const collection = (scopeName ?? this.globalCollectionName).replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
 
     const userData = await this.db.collection(collection).findOne({ id: user });
 

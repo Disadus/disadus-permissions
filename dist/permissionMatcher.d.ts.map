@@ -1,1 +1,1 @@
-{"version":3,"file":"permissionMatcher.d.ts","sourceRoot":"","sources":["../src/permissionMatcher.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,iBAAiB,UAAW,MAAM,cAAc,MAAM,8BAAyB,OA0C3F,CAAC;AAEF,eAAO,MAAM,kBAAkB,UAAW,MAAM,eAAe,MAAM,EAAE,8BAAyB,OAO/F,CAAA"}
+{"version":3,"file":"permissionMatcher.d.ts","sourceRoot":"","sources":["../src/permissionMatcher.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,iBAAiB,UAAW,MAAM,cAAc,MAAM,8BAAyB,OAqD3F,CAAC;AAEF,eAAO,MAAM,kBAAkB,UAAW,MAAM,eAAe,MAAM,EAAE,8BAAyB,OAO/F,CAAA"}

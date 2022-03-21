@@ -1,6 +1,9 @@
 export const matchesPermission = (query: string, permission: string, caseSensitive = true): boolean => {
-  const queryPaths = caseSensitive ? query.split('.') : query.toLowerCase().split('.');
-  const permissionPaths = caseSensitive ? permission.split('.') : permission.toLowerCase().split('.');
+  const cleanedQuery = query.replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
+  const cleanedPermission = permission.replace(/^(\s|\.)+|(\s|\.)+$/gm,'');
+
+  const queryPaths = caseSensitive ? cleanedQuery.split('.') : cleanedQuery.toLowerCase().split('.');
+  const permissionPaths = caseSensitive ? cleanedPermission.split('.') : cleanedPermission.toLowerCase().split('.');
   
   // The shorter path will be queried because it will either not match or it will end in a *
   const shorterPath = queryPaths.length < permissionPaths.length ? queryPaths : permissionPaths;
@@ -36,6 +39,14 @@ export const matchesPermission = (query: string, permission: string, caseSensiti
     }
 
     // Otherwise it matches and the search can continue
+  }
+
+  // If we reach this point that means that the shorter part has matched up with the longer part so far and there have been to *s, this means
+  // that if the lengths are equal they will match, but if they are not these do not match
+  // 
+  // Ex: `this.is.a` does not match `this.is.a.permission`
+  if (longerPath.length != shorterPath.length) {
+    return false
   }
 
   // If the entire thing matches return true
